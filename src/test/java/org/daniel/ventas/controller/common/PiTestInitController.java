@@ -14,7 +14,6 @@ import java.net.ServerSocket;
 
 public class PiTestInitController {
 
-    protected String keyForJson = "randomKey";
     protected Vertx vertx;
     protected Integer port;
     protected String host = "localhost";

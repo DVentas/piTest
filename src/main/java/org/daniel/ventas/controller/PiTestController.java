@@ -25,14 +25,6 @@ public class PiTestController extends AbstractVerticle {
 
         router.route().handler(BodyHandler.create());
 
-        router.route().failureHandler(routingContext -> {
-
-                // This one deliberately fails the request passing in the status code
-                // E.g. 403 - Forbidden
-                routingContext.fail(403);
-            }
-        );
-
         router.post("/diff")
             .handler(
                 new PiTestDiffService(
