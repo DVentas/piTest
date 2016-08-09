@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - oraclejdk8
+branches:
+ only:
+  - master
+install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: mvn test
+after_success:
+  - mvn cobertura:cobertura coveralls:report -DrepoToken=$repoToken -DtravisJobId=$TRAVIS_JOB_ID
+notifications:
+  email:
+  - daniel.ventas.l@gmail.com
+
