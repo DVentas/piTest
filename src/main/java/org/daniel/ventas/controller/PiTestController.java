@@ -7,7 +7,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
-import org.daniel.ventas.service.PiTestDiffService;
+import org.daniel.ventas.service.PiTestMixService;
 
 public class PiTestController extends AbstractVerticle {
 
@@ -25,11 +25,11 @@ public class PiTestController extends AbstractVerticle {
 
         router.route().handler(BodyHandler.create());
 
-        router.post("/diff")
+        router.post("/api/mix")
             .handler(
-                new PiTestDiffService(
+                new PiTestMixService(
                     config().getString("key.stringArray", "stringsToProcess")
-                )::getDiff
+                )::mix
         );
 
         // Create the HTTP server and pass the "accept" method to the request handler.

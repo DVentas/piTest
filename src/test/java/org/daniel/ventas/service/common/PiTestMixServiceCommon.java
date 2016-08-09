@@ -7,7 +7,7 @@ import org.daniel.ventas.controller.common.PiTestInitController;
 
 import java.io.IOException;
 
-public class PiTestDiffServiceCommon extends PiTestInitController {
+public class PiTestMixServiceCommon extends PiTestInitController {
 
     protected final static String KEY_STRINGS_TO_PROCESS = "randomKey";
     private final static String KEY_STRINGS_CONFIG = "key.stringArray";
@@ -29,7 +29,7 @@ public class PiTestDiffServiceCommon extends PiTestInitController {
         //  message and status http code is statusCode. Then, we call the `complete` method on the async
         // handler to declare this async (and here the test) done. Notice that the assertions are made on the 'context'
         // object and are not Junit assert. This ways it manage the async aspect of the test the right way.
-        vertx.createHttpClient().post(port, host, "/diff")
+        vertx.createHttpClient().post(port, host, "/api/mix")
                 .putHeader("content-type", "application/json")
                 .putHeader("content-length", Integer.toString(jsonBody.length()))
                 .handler(response -> {

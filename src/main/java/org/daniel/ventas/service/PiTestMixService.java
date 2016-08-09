@@ -3,22 +3,23 @@ package org.daniel.ventas.service;
 import io.vertx.core.json.DecodeException;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PiTestDiffService {
+public class PiTestMixService {
 
     private final String jsonKeyStrings;
 
-    public PiTestDiffService (final String jsonKeyStrings) {
+    public PiTestMixService(final String jsonKeyStrings) {
         this.jsonKeyStrings = jsonKeyStrings;
     }
 
     @SuppressWarnings("unchecked")
-    public void getDiff(RoutingContext routingContext) throws RuntimeException {
+    public void mix(RoutingContext routingContext) throws RuntimeException {
 
         try {
             final JsonArray jsonStrings = routingContext
@@ -54,7 +55,7 @@ public class PiTestDiffService {
                 routingContext.response()
                         .setStatusCode(200)
                         .putHeader("content-type", "application/json; charset=utf-8")
-                        .end(Json.encodePrettily(processDiff(stringsToProcess)));
+                        .end(Json.encodePrettily(processMix(stringsToProcess)));
             }
 
         } catch (ClassCastException cce) {
@@ -77,7 +78,7 @@ public class PiTestDiffService {
 
     }
 
-    private String processDiff(final List<String> stringsToProcess) {
+    private JsonObject processMix(final List<String> stringsToProcess) {
 
         int indexOfString = 0;
 
@@ -111,6 +112,6 @@ public class PiTestDiffService {
         }
 
 
-        return "";
+        return new JsonObject().put("result", "22");
     }
 }

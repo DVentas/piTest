@@ -6,12 +6,12 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 import org.daniel.ventas.common.Constants;
-import org.daniel.ventas.service.common.PiTestDiffServiceCommon;
+import org.daniel.ventas.service.common.PiTestMixServiceCommon;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(VertxUnitRunner.class)
-public class PiTestDiffServiceErrorsTest extends PiTestDiffServiceCommon {
+public class PiTestMixServiceErrorsTest extends PiTestMixServiceCommon {
 
     @Test
     public void shouldReturnError400WhenMalformedJSON(final TestContext context) {

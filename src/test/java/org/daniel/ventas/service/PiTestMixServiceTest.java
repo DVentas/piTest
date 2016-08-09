@@ -6,12 +6,12 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 import org.daniel.ventas.common.Constants;
-import org.daniel.ventas.service.common.PiTestDiffServiceCommon;
+import org.daniel.ventas.service.common.PiTestMixServiceCommon;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(VertxUnitRunner.class)
-public class PiTestDiffServiceTest extends PiTestDiffServiceCommon {
+public class PiTestMixServiceTest extends PiTestMixServiceCommon {
 
     @Test
     public void shouldReturnOk200WithTwoStrings(final TestContext context) {
