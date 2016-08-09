@@ -56,5 +56,56 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
 
     }
 
+    @Test
+    public void shouldReturnOk200WithThreeStringsEquals(final TestContext context) {
+
+        final String json = Json.encodePrettily(new JsonObject()
+                .put(KEY_STRINGS_TO_PROCESS, new JsonArray()
+                        .add("aaaabbbcc")
+                        .add("aaaabbbcc")
+                        .add("aaaabbbcc")
+                ));
+
+        final String result = Json.encodePrettily(new JsonObject()
+                .put(Constants.KEY_RETURNED, "=:aaaa/=:bbb/=:cc"));
+
+        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+
+    }
+
+    @Test
+    public void shouldReturnOk200WithThreeStringsMix(final TestContext context) {
+
+        final String json = Json.encodePrettily(new JsonObject()
+                .put(KEY_STRINGS_TO_PROCESS, new JsonArray()
+                        .add("yYyYyYyYyaaaabbbcc")
+                        .add("aaaabbbccuuuuu")
+                        .add("aaaabbbccuuuu")
+                ));
+
+        final String result = Json.encodePrettily(new JsonObject()
+                .put(Constants.KEY_RETURNED, "2:uuuuu/1:yyyyy/=:aaaa/=:bbb/=:cc"));
+
+        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+
+    }
+
+    @Test
+    public void shouldReturnOk200WithThreeStringsMixTwoByTwo(final TestContext context) {
+
+        final String json = Json.encodePrettily(new JsonObject()
+                .put(KEY_STRINGS_TO_PROCESS, new JsonArray()
+                        .add("rrrrrr aaa bbb zz")
+                        .add("ttttt aaa cc czz")
+                        .add("yyyy ccc bbb zz")
+                ));
+
+        final String result = Json.encodePrettily(new JsonObject()
+                .put(Constants.KEY_RETURNED, "1:rrrrrr/2:ttttt/3:yyyy/1,2:aaa/1,3:bbb/2,3:ccc/=:zz"));
+
+        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+
+    }
+
 
 }
