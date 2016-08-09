@@ -81,7 +81,7 @@ public class PiTestMixService {
 
     private JsonObject processMix(final List<String> stringsToProcess) {
 
-        int indexOfString = 1;
+        int indexOfString = 0;
 
         StringBuilder result;
 
@@ -109,7 +109,7 @@ public class PiTestMixService {
 
                 }
 
-                countCharactersOfSrings.put(indexOfString++, countChars);
+                countCharactersOfSrings.put(++indexOfString, countChars);
 
             }
 
