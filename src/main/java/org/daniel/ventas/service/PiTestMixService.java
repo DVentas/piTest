@@ -179,7 +179,6 @@ public class PiTestMixService {
             final Map<Integer, Map<Character, List<Integer>>> orderedCharsByCount = new TreeMap<>(Collections.reverseOrder());
             Map<Character, List<Integer>> finalCharsCount;
 
-            //TODO
             // create result for any character
             for (Map.Entry<Character, CountCharacter> uniqueCharsCount : finalCountCharacters.entrySet()) {
 
@@ -190,7 +189,7 @@ public class PiTestMixService {
 
                 } else {
 
-                    finalCharsCount = new HashMap<>();
+                    finalCharsCount = new TreeMap<>();
                     finalCharsCount.put(uniqueCharsCount.getKey(), uniqueCharsCount.getValue().getIndexes());
 
                     orderedCharsByCount.put(uniqueCharsCount.getValue().getCount(), finalCharsCount);
@@ -198,9 +197,7 @@ public class PiTestMixService {
             }
 
 
-            // TODO
             // union all results
-
             result = new StringBuilder();
 
             for (Map.Entry<Integer, Map<Character, List<Integer>>> resultOrdered : orderedCharsByCount.entrySet()) {
@@ -216,24 +213,6 @@ public class PiTestMixService {
             if (result.lastIndexOf("/") > -1) {
                 result.deleteCharAt(result.lastIndexOf("/"));
             }
-
-
-            //for entradas en hash
-
-                // for characters in map
-                // if count > 1
-
-                // add TreeSet -> final, key : count, value hashmap<character, arrayofindex)
-
-            // for final count, hashmap
-                // for keyEntry in hashmap
-                    // if arrayofindex.size === indexOfString
-                         // add =: + character * count
-                    // else if arrayofindex.size > 1
-                        // add arrayofindex.mkString(",") : + character * count
-                    // else
-                        // add arrayofindex.toString : + character * count
-                    // Add Separator ("/")
 
         } catch (ClassCastException cce) {
             throw new RuntimeException(
