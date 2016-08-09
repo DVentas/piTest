@@ -81,6 +81,26 @@
         </executions>
       </plugin>
 
+ <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>4.1.0</version>
+                        <configuration>
+                            <repoToken>${repoToken}</repoToken>
+                            <sourceDirectories>
+                                <sourceDirectory>src/main/scala</sourceDirectory>
+                            </sourceDirectories>
+                            <coberturaReports>
+                                <coberturaReport>
+                                    ${basedir}/target/coverage.xml
+                                </coberturaReport>
+                            </coberturaReports>
+                            <sourceEncoding>UTF-8</sourceEncoding>
+                            <serviceName>travis-ci</serviceName>
+                            <serviceJobId>${travisJobId} </serviceJobId>
+                        </configuration>
+                    </plugin>
+
     </plugins>
   </build>
 
