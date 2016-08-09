@@ -59,6 +59,16 @@ public class PiTestDiffServiceErrorsTest extends PiTestDiffServiceCommon {
     }
 
     @Test
+    public void shouldReturnError400WhenElementsInArrayNotStrings(final TestContext context) {
+
+        final String json = Json.encodePrettily(new JsonObject()
+                .put(KEY_STRINGS_TO_PROCESS, new JsonArray().add("OneElement").add(2)));
+
+        this.checkResponse(context, json, "All object in array ", Constants.HTTP_CODE_BAD_REQUEST);
+
+    }
+
+    @Test
     public void shouldReturnOk200WithTwoStrings(final TestContext context) {
 
         final String json = Json.encodePrettily(new JsonObject()
