@@ -81,14 +81,14 @@
         </executions>
       </plugin>
 
- <plugin>
+ 	<plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
                         <version>4.1.0</version>
                         <configuration>
                             <repoToken>${repoToken}</repoToken>
                             <sourceDirectories>
-                                <sourceDirectory>src/main/scala</sourceDirectory>
+                                <sourceDirectory>src/main/java</sourceDirectory>
                             </sourceDirectories>
                             <coberturaReports>
                                 <coberturaReport>
