@@ -53,7 +53,7 @@ How to use
 Should return:
 ```Text
   {
-    "result" : "1:tttt/2:nn/2:rr/2:oo/=:ss/"
+    "result" : "1:tttt/2:rrr/2:nn/2:oo/1:ss"
   }
 ```
 
