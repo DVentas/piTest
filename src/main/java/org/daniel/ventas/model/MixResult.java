@@ -25,7 +25,6 @@ public class MixResult implements Comparable<MixResult>{
         return compareMix;
     }
 
-<<<<<<< Updated upstream
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -40,38 +39,28 @@ public class MixResult implements Comparable<MixResult>{
     }
 
 
-=======
->>>>>>> Stashed changes
     public Character getCharacter() {
         return character;
     }
 
-<<<<<<< Updated upstream
     public void setCharacter(Character character) {
         this.character = character;
     }
 
-=======
->>>>>>> Stashed changes
     public Integer getCount() {
         return count;
     }
 
-<<<<<<< Updated upstream
     public void setCount(Integer count) {
         this.count = count;
     }
 
-=======
->>>>>>> Stashed changes
     public List<Integer> getIndexes() {
         return indexes;
     }
 
-<<<<<<< Updated upstream
     public void setIndexes(List<Integer> indexes) {
         this.indexes = indexes;
     }
-=======
->>>>>>> Stashed changes
+
 }
