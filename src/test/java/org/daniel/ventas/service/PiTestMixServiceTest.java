@@ -1,11 +1,11 @@
 package org.daniel.ventas.service;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
-import org.daniel.ventas.common.Constants;
 import org.daniel.ventas.service.common.PiTestMixServiceCommon;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +20,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 .put(KEY_STRINGS_TO_PROCESS, new JsonArray().add("OneElement").add("twoElement")));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "1:eee/1:nn/2:tt"));
+                .put(PiTestMixService.KEY_RETURNED, "1:eee/1:nn/2:tt"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -33,9 +33,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 .put(KEY_STRINGS_TO_PROCESS, new JsonArray().add("").add("")));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, ""));
+                .put(PiTestMixService.KEY_RETURNED, ""));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -50,9 +50,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                                                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "2:eeeeeee/1:iiiiiii/1:lllllll/3:oooooo/2:nn/1,3:tt"));
+                .put(PiTestMixService.KEY_RETURNED, "2:eeeeeee/1:iiiiiii/1:lllllll/3:oooooo/2:nn/1,3:tt"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -67,9 +67,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "=:aaaa/=:bbb/=:cc"));
+                .put(PiTestMixService.KEY_RETURNED, "=:aaaa/=:bbb/=:cc"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -84,9 +84,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "2:uuuuu/1:yyyyy/=:aaaa/=:bbb/=:cc"));
+                .put(PiTestMixService.KEY_RETURNED, "2:uuuuu/1:yyyyy/=:aaaa/=:bbb/=:cc"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -101,9 +101,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "1:rrrrrr/2:ttttt/3:yyyy/1,2:aaa/1,3:bbb/2,3:ccc/=:zz"));
+                .put(PiTestMixService.KEY_RETURNED, "1:rrrrrr/2:ttttt/3:yyyy/1,2:aaa/1,3:bbb/2,3:ccc/=:zz"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -119,9 +119,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "2:rrrrrr/3:ttttt/1:yyyy/2,3:aaa/1,2:bbb/1,3:ccc/=:zz"));
+                .put(PiTestMixService.KEY_RETURNED, "2:rrrrrr/3:ttttt/1:yyyy/2,3:aaa/1,2:bbb/1,3:ccc/=:zz"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -137,9 +137,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "3:rrrrrr/2:ttttt/1:yyyy/2,3:aaa/1,3:bbb/1,2:ccc/=:zz"));
+                .put(PiTestMixService.KEY_RETURNED, "3:rrrrrr/2:ttttt/1:yyyy/2,3:aaa/1,3:bbb/1,2:ccc/=:zz"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -155,9 +155,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "3:rrrrrr/1:ttttt/2:yyyy/1,3:aaa/2,3:bbb/1,2:ccc/=:zz"));
+                .put(PiTestMixService.KEY_RETURNED, "3:rrrrrr/1:ttttt/2:yyyy/1,3:aaa/2,3:bbb/1,2:ccc/=:zz"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -171,9 +171,11 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "1:aaaa/1:bbb/1:cc"));
+                .put(PiTestMixService.KEY_RETURNED, "1:aaaa/1:bbb/1:cc"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+
+
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -188,9 +190,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "3:kkkkkk/1:aaaa/1,3:bbb/3:iii/1:cc/3:hh"));
+                .put(PiTestMixService.KEY_RETURNED, "3:kkkkkk/1:aaaa/1,3:bbb/3:iii/1:cc/3:hh"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 
@@ -205,9 +207,9 @@ public class PiTestMixServiceTest extends PiTestMixServiceCommon {
                 ));
 
         final String result = Json.encodePrettily(new JsonObject()
-                .put(Constants.KEY_RETURNED, "1,3:aaaa/=:bbb"));
+                .put(PiTestMixService.KEY_RETURNED, "1,3:aaaa/=:bbb"));
 
-        this.checkResponse(context, json, result, Constants.HTTP_CODE_OK, true);
+        this.checkResponse(context, json, result, HttpResponseStatus.OK.code(), true);
 
     }
 

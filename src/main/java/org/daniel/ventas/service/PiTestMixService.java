@@ -12,6 +12,8 @@ import java.util.*;
 
 public class PiTestMixService {
 
+    public static final String KEY_RETURNED = "result";
+
     private final String jsonKeyStrings;
 
     public PiTestMixService(final String jsonKeyStrings) {

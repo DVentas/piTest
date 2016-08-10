@@ -1,9 +1,9 @@
 package org.daniel.ventas.controller;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
-import org.daniel.ventas.common.Constants;
 import org.daniel.ventas.controller.common.PiTestInitController;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ public class PiTestControllerTest extends PiTestInitController {
         // object and are not Junit assert. This ways it manage the async aspect of the test the right way.
         vertx.createHttpClient().post(port, host, "/api/mix")
             .handler(response -> {
-                context.assertEquals(response.statusCode(), Constants.HTTP_CODE_BAD_REQUEST);
+                context.assertEquals(response.statusCode(), HttpResponseStatus.BAD_REQUEST.code());
                 response.bodyHandler(body -> {
                     context.assertFalse(body.toString().contains("Resource not found"));
                     async.complete();
@@ -51,7 +51,7 @@ public class PiTestControllerTest extends PiTestInitController {
         // (and here the test) done. Notice that the assertions are made on the 'context' object and are not Junit
         // assert. This ways it manage the async aspect of the test the right way.
         vertx.createHttpClient().getNow(port, host, "/otherAPINotImplemented", response -> {
-            context.assertEquals(response.statusCode(), Constants.HTTP_CODE_NOT_FOUND);
+            context.assertEquals(response.statusCode(), HttpResponseStatus.NOT_FOUND.code());
             response.handler(body -> {
                 context.assertTrue(body.toString().contains("Resource not found"));
                 async.complete();
