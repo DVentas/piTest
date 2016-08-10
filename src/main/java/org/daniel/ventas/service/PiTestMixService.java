@@ -5,10 +5,10 @@ import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
+import org.codehaus.plexus.util.StringUtils;
+import org.daniel.ventas.model.MixResult;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PiTestMixService {
 
@@ -18,6 +18,11 @@ public class PiTestMixService {
         this.jsonKeyStrings = jsonKeyStrings;
     }
 
+    /**
+     *
+     * @param routingContext
+     * @throws RuntimeException
+     */
     @SuppressWarnings("unchecked")
     public void mix(RoutingContext routingContext) throws RuntimeException {
 
@@ -78,40 +83,179 @@ public class PiTestMixService {
 
     }
 
+    /**
+     *
+     * @param stringsToProcess
+     * @return mix all strings in list
+     */
     private JsonObject processMix(final List<String> stringsToProcess) {
 
-        int indexOfString = 0;
-
-        final Map<Integer, Map<Character, Integer>> countCharactersOfSrings =
-                new HashMap<>();
+        String result;
 
         try {
-            for (String  strToProcess :  stringsToProcess) {
 
-                Map<Character, Integer> countChars = new HashMap<>();
+            final Set<MixResult> orderedCharactersCount = this.getOrderedCharactersCount(stringsToProcess);
 
-                for (Character character : strToProcess.toCharArray()) {
+            result = this.createResultByCharacter(orderedCharactersCount, stringsToProcess.size());
 
-                    int actualCount = countChars.get(character) == null ? 0 : countChars.get(character);
-
-                    countChars.put(character, actualCount + 1);
-
-                }
-
-                countCharactersOfSrings.put(indexOfString++, countChars);
-
-            }
         } catch (ClassCastException cce) {
             throw new RuntimeException(
-                new StringBuffer()
-                    .append("All object in array '")
-                    .append(this.jsonKeyStrings)
-                    .append("' must be a String object.")
-                    .toString()
+                    new StringBuffer()
+                            .append("All object in array '")
+                            .append(this.jsonKeyStrings)
+                            .append("' must be a String object.")
+                            .toString()
             );
         }
 
 
-        return new JsonObject().put("result", "22");
+        return new JsonObject().put("result", result);
+    }
+
+    /**
+     *
+     * @param stringsToProcess
+     * @return return ordered array with max count for every character
+     */
+    private Set<MixResult> getOrderedCharactersCount(final List<String> stringsToProcess) {
+
+        final Map<Character, MixResult> mix = new TreeMap<>();
+
+        int indexOfString = 0;
+
+        Map<Character, Integer> countChars;
+
+        // Count chars for string
+        for (String  strToProcess :  stringsToProcess) {
+
+            ++indexOfString;
+
+            countChars = this.countCharsForString(strToProcess.replaceAll("[^a-z]", ""));
+
+            for(Map.Entry<Character, Integer> charCount : countChars.entrySet()) {
+
+                if (charCount.getValue() > 1) {
+                    this.checkIfShouldAddEntry(mix, charCount.getKey(), charCount.getValue(), indexOfString);
+                }
+
+            }
+
+        }
+
+        // Order results
+        final Set<MixResult> mixOrdered = new TreeSet<>(Collections.reverseOrder());
+        mixOrdered.addAll(mix.values());
+
+        return mixOrdered;
+    }
+
+    /**
+     *
+     * @param strToProcess
+     * @return One entry for ecery character with count in string
+     */
+    private Map<Character, Integer> countCharsForString (final String strToProcess) {
+        final Map<Character, Integer> countChars = new HashMap<>();
+
+        for (Character character : strToProcess.toCharArray()) {
+
+            int actualCount = countChars.get(character) == null ? 0 : countChars.get(character);
+
+            countChars.put(character, actualCount + 1);
+
+        }
+
+        return countChars;
+    }
+
+    /**
+     *
+     * @param mix
+     * @param character
+     * @param count
+     * @param indexOfString
+     */
+    private void checkIfShouldAddEntry (
+            final Map<Character, MixResult> mix,
+            final Character character,
+            final Integer count,
+            final Integer indexOfString) {
+
+        MixResult mr;
+
+        if (mix.containsKey(character)) {
+
+            mr = mix.get(character);
+
+            switch (mr.getCount().compareTo(count)) {
+
+                case 1:
+                    // Character has better count for other index, nothing to do here
+                    break;
+                case 0:
+                    // Character has same count, add index to list
+                    mr.getIndexes().add(indexOfString);
+                    break;
+                case -1:
+                    // Actual character has more counts that old, replace mixResult
+                    mix.put(character,
+                            new MixResult(character, count, new ArrayList<Integer>() {{ add(indexOfString); }}));
+                    break;
+            }
+        } else {
+            // havent entry in hash, put then new
+            mix.put(character, new MixResult(character, count, new ArrayList<Integer>() {{ add(indexOfString); }}));
+
+        }
+
+    }
+
+    /**
+     *
+     * @param finalCountCharacters
+     * @param totalStrings
+     * @return string that contains complete result
+     */
+    private String createResultByCharacter(final Set<MixResult> finalCountCharacters, final int totalStrings) {
+
+        final Iterator<MixResult> mixResults = finalCountCharacters.iterator();
+        final StringBuilder result = new StringBuilder();
+
+        while (mixResults.hasNext()) {
+            result.append(buildString(mixResults.next(), totalStrings));
+
+            result.append("/");
+        }
+
+        // Remove last / of the resut
+        if (result.lastIndexOf("/") > -1) {
+            result.deleteCharAt(result.lastIndexOf("/"));
+        }
+
+        return result.toString();
+
+    }
+
+    /**
+     *
+     * @param result
+     * @param numberOfStrings
+     * @return string that describes result
+     */
+    private String buildString (final MixResult result, final Integer numberOfStrings) {
+        final StringBuilder resultByCharAndCount = new StringBuilder();
+
+        if (result.getIndexes().size() == numberOfStrings) {
+            resultByCharAndCount.append("=");
+        } else {
+            resultByCharAndCount.append(StringUtils.join(result.getIndexes().iterator(), ","));
+        }
+
+        resultByCharAndCount.append(":");
+
+        resultByCharAndCount.append(
+                new String(new char[result.getCount()]).replace("\0", String.valueOf(result.getCharacter())));
+
+        return resultByCharAndCount.toString();
     }
 }

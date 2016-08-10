@@ -21,7 +21,7 @@ public class PiTestMixServiceCommon extends PiTestInitController {
         return options;
     }
 
-    protected void checkResponse (final TestContext context, final String jsonBody, final String stringInBody, final Integer statusCode ) {
+    protected void checkResponse (final TestContext context, final String jsonBody, final String stringInBody, final Integer statusCode, final boolean equals) {
         // This test is asynchronous, so get an async handler to inform the test when we are done.
         final Async async = context.async();
 
@@ -35,12 +35,22 @@ public class PiTestMixServiceCommon extends PiTestInitController {
                 .handler(response -> {
                     context.assertEquals(response.statusCode(), statusCode);
                     response.bodyHandler(body -> {
-                        context.assertTrue(body.toString().contains(stringInBody));
+
+                        if (equals)
+                            context.assertEquals(body.toString(), stringInBody);
+
+                        else
+                            context.assertTrue(body.toString().contains(stringInBody));
+
                         async.complete();
                     });
                 })
                 .write(jsonBody)
                 .end();
+    }
+
+    protected void checkResponse (final TestContext context, final String jsonBody, final String stringInBody, final Integer statusCode) {
+       this.checkResponse(context, jsonBody, stringInBody, statusCode, false);
     }
 
 }
