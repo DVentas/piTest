@@ -46,6 +46,8 @@ How to use
 
 4. Test API
 ------------------------------------------------------------
+### Example 1
+
 ```Text
   curl -H "Content-Type: application/json" -X POST -d '{"stringsToProcess":["stringtotest", "otherstringrandom"]}' http://localhost:8080/api/mix
 ```
@@ -57,6 +59,17 @@ Should return:
   }
 ```
 
+### Example 2
 
+```Text
+  curl -H "Content-Type: application/json" -X POST -d '{"stringsToProcess":["firstelementiiiiiillllll", "2 12213(( ^ seeeecondAYI32  ++ - element", "third&elementoooooo"]}' http://localhost:8080/api/mix
+```
+
+Should return:
+```Text
+  {
+    "result" : "2:eeeeeee/1:iiiiiii/1:lllllll/3:oooooo/2:nn/1,3:tt"
+  }
+```
 
 
